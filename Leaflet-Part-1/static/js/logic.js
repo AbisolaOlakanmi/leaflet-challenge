@@ -1,52 +1,4 @@
-
-// let myMap = L.map("map",{ 
-//     center:[36.587, -121.408],
-//     zoom:5
-// });
-
-
-// // Defining the earthquake URL
-// // 
-// // let earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
-
-// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(myMap);
-
-// // Defining the marker
-
-// // L.marker([36.587, -121.408])
-// function markerSize(magnitude) {
-//     return (magnitude) *5;
-//   };
-
-//   // Function to determine marker color by depth
-// function chooseColor(depth){
-//     if (depth < 10) return "#00FF00";
-//     else if (depth < 30) return "greenyellow";
-//     else if (depth < 50) return "yellow";
-//     else if (depth < 70) return "orange";
-//     else if (depth < 90) return "orangered";
-//     else return "#FF0000";
-//   }
-  
-//   function createFeatures(earthquakeData) 
-
-//   // Give each feature a popup that describes the place and time of the earthquake.
-//   function onEachFeature(feature, layer) {
-//     layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
-//   }
-
-// // // Perform a GET request to the query URL
-// // d3.json(earthquakeURL).then(function (data) {
-// //     // Console log the data retrieved 
-// //     console.log(data);
-// //     createFeatures(data.features);
-// // });
-
-
-
-// // Defining the earthquake URL
+ // Defining the earthquake URL
 
 
 let earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
@@ -59,30 +11,16 @@ function markerSize(magnitude) {
 // Function to determining marker color by depth
 
 function depthColor(d) {
-  return d < 5 ? "#ebd234" :
-  d < 20 ? "#b4eb34" :
+  return d < 5 ? "#ea2c2c" :
+  d < 20 ? "#2ceabf" :
   d < 40 ? "#34eb8c" :
   d < 50 ? "#34ebba" :
-  d < 60 ? "#349eeb" :
-  d < 70 ? "#63542d" :
-  "#ba1c1c";
+  d < 60 ? "#2c99ea" :
+  d < 70 ? "#d5ea2c" :
+  "#ba1c1c";}
 
-// function chooseColor(depth) {
-//     switch(true) {
-//       case depth > 90:
-//         return "red";
-//       case depth > 70:
-//         return "orangered";
-//       case depth > 50:
-//         return "orange";
-//       case depth > 30:
-//         return "gold";
-//       case depth > 10:
-//         return "yellow";
-//       default:
-//         return "lightgreen";
-//     }
-}
+ 
+
  // console log 
 
 d3.json(earthquakeURL).then(function (data) {
@@ -92,7 +30,8 @@ d3.json(earthquakeURL).then(function (data) {
 // GET request to the earthquakeURL
 
 d3.json(earthquakeURL).then(function (data) {
-  // Once we get a response, send the data.features object to the createFeatures function.
+ 
+
   createFeatures(data.features);
 });
 
@@ -110,14 +49,14 @@ function createFeatures(earthquakeData) {
       pointToLayer : Markers
 });
 
-// Send our earthquakes layer to the createMap function/
+// earthquakes layer to the createMap function
     createMap(earthquakes);
  }
 
 function createMap(earthquakes) {
 
   // Create the base layers.
-  let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   })
 
@@ -146,7 +85,7 @@ function createMap(earthquakes) {
     layers: [street, earthquakes]
   });
 
-//   adding layer to map
+//  Adding layer to map
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
@@ -173,7 +112,7 @@ function createMap(earthquakes) {
 function Markers(feature, latlng){
     let choices = {
         radius : markerSize(feature.properties.mag),
-        fillColor: depthColor(feature.geometry.coordinates[2]),
+        fillColor: depthColor(feature.geometry.coordinates[1]),
         fillOpacity: 0.7,
         color: "black",
         stroke: true,
